@@ -87,12 +87,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     class Doctor {
         constructor(nombre, especialidad, experiencia) {
-            this.nombre = nombre;
-            this.especialidad = especialidad;
-            this.experiencia = experiencia;
-            this._añosExperiencia = experiencia; 
+            this.nombre             = nombre;
+            this.especialidad       = especialidad;
+            this.experiencia        = experiencia;
+            this._añosExperiencia   = experiencia; 
+            this.pacientesAtendidos = 0;
+            this.costoPorConsulta   = 7800; // Costo base por consulta
+            this.horasDisponibles   = []; // Array para almacenar horas disponibles
         }
-
         get añosExperiencia() {
             return this._añosExperiencia;
         }
@@ -101,9 +103,37 @@ document.addEventListener("DOMContentLoaded", () => {
             if (valor >= 0) this._añosExperiencia = valor;
             else console.error("Valor inválido para años de experiencia.");
         }
-
         mostrarInfo() {
             return `${this.nombre}, ${this.especialidad} con ${this.experiencia} años de experiencia.`;
+        }
+         // Método para calcular total de pacientes atendidos
+        calcularTotalPacientes() {
+            return this.pacientesAtendidos;
+        }
+        // Método para atender a un paciente
+        atenderPaciente() {
+            this.pacientesAtendidos++;
+        }
+        // Método para calcular costo de consulta
+        calcularCostoConsulta() {
+            return this.costoPorConsulta + (this._añosExperiencia * 5); // Aumenta 5 por cada año de experiencia
+        }
+        // Método para agregar horas disponibles
+        agregarHoraDisponible(hora) {
+            this.horasDisponibles.push(hora);
+        }
+        // Método para reservar una hora
+        reservarHora(hora) {
+            const index = this.horasDisponibles.indexOf(hora);
+            if (index !== -1) {
+            this.horasDisponibles.splice(index, 1);
+            return true;
+            }
+            return false;
+        }
+        // Método para mostrar horas disponibles
+        mostrarHorasDisponibles() {
+            return this.horasDisponibles.length > 0 ? this.horasDisponibles : "No hay horas disponibles";
         }
     }
 
@@ -111,18 +141,63 @@ document.addEventListener("DOMContentLoaded", () => {
         constructor(nombre, experiencia, operaciones) {
             super(nombre, "Cirugía", experiencia);
             this.operaciones = operaciones;
+            this.costoPorOperacion = 580780; 
         }
-
         calcularOperaciones() {
             return this.operaciones;
         }
+        // Nuevo método específico para Cirujano
+        realizarOperacion() {
+            this.operaciones++;
+            this.atenderPaciente(); // También incrementa pacientesAtendidos
+        }
+        // Sobrescritura del método calcularCostoConsulta (polimorfismo)
+        calcularCostoConsulta() {
+            return super.calcularCostoConsulta() * 1.5; // 50% más caro que un doctor regular
+        }
+        // Nuevo método para calcular costo de operación
+        calcularCostoOperacion() {
+            return this.costoPorOperacion + (this.operaciones * 10); // Aumenta 10 por cada operación realizada
+        }
     }
 
-    const drMario = new Doctor("Dr. Mario", "Medicina Interna", 10);
+/*     const drMario = new Doctor("Dr. Mario", "Medicina Interna", 10);
     console.log(drMario.mostrarInfo());
 
     const drAna = new Cirujano("Dra. Ana Polo", 6, 200);
-    console.log(drAna.calcularOperaciones());
+    console.log(drAna.calcularOperaciones()); */
+
+
+    const drMario = new Doctor("Dr. Mario", "Medicina Interna", 10);
+    drMario.agregarHoraDisponible("09:00 AM");
+    drMario.agregarHoraDisponible("10:30 AM");
+    drMario.agregarHoraDisponible("12:00 PM");
+    drMario.atenderPaciente();
+    drMario.atenderPaciente();
+    console.log(drMario.mostrarInfo());
+    console.log(`Horas disponibles del Dr. ${drMario.nombre}:${drMario.mostrarHorasDisponibles()}`);
+    const hora_reservada = "10:30 AM";
+    if (drMario.reservarHora(hora_reservada)) {
+      console.log(`Hora reservada: ${hora_reservada}`);
+    } else {
+      console.log("No se pudo reservar la hora");
+    }
+    console.log(`Horas disponibles actualizadas: ${drMario.mostrarHorasDisponibles()}`);
+    console.log("Pacientes atendidos:", drMario.calcularTotalPacientes());
+    console.log("Valor total de consultas realizadas (pacientes atendidos)", (drMario.calcularCostoConsulta()*drMario.calcularTotalPacientes()));
+    
+    
+    const drAna = new Cirujano("Dra. Ana Polo", 6, 7);
+    drAna.agregarHoraDisponible("14:00 PM");
+    drAna.agregarHoraDisponible("16:00 PM");
+    console.log(`Horas disponibles de  ${drAna.nombre}: ${drAna.mostrarHorasDisponibles()}`);
+    console.log(`Costo de consulta con cirujano: $${drAna.calcularCostoConsulta()}`);
+    drAna.realizarOperacion();
+    drAna.realizarOperacion();
+    console.log(drAna.mostrarInfo());
+    console.log(`Operaciones realizadas: ${drAna.operaciones}`);
+    console.log(`Valor total de las operaciones realizadas: $${(drAna.calcularCostoOperacion()*drAna.operaciones)}`);
+
 
     if (window.location.pathname.includes("equipo-medico.html")) {
         fetch("./doctores.json")
