@@ -50,15 +50,57 @@ Se aplicaron descuentos al costo total de consultas, permitiendo manejar descuen
 
 ## Programación Orientada a Objetos
 
-- Clase Doctor: 
-  Se utilizó para modelar la información de los médicos, incorporando encapsulamiento para proteger los datos.
+### Clases y Herencia
 
-- Herencia y Subclases:
-  Se implementó una subclase para médicos con especialid de cirujano, extendiendo las funcionalidades de la clase base.
+### Clase base `Doctor`
+La clase `Doctor` define propiedades y métodos comunes para todos los doctores. Incluye métodos como:
 
-- Polimorfismo:
-  Sobrescribió un método de la subclase para adaptarlo a las necesidades de la especialidad del médico
+- `mostrarInfo()`: Muestra información básica del doctor.
+- `calcularTotalPacientes()`: Calcula el número total de pacientes atendidos.
+- `atenderPaciente()`: Registra la atención de un paciente.
+- `calcularCostoConsulta()`: Calcula el costo de cada consulta.
+- `agregarHoraDisponible()`: Agrega las horas disponibles para un doctor.
+- `reservarHora()`: Registra la reserva de una hora.
+- `mostrarHorasDisponibles()`: Muestra las horas disponibles.
 
+### Clase derivada `Cirujano`
+La clase `Cirujano` hereda de `Doctor` utilizando la palabra clave `extends`. Esta clase añade propiedades y métodos específicos:
+
+- Propiedad `operaciones`: Registra el número de operaciones realizadas por el cirujano.
+- Método `realizarOperacion()`: Permite al cirujano realizar una operación.
+- Método `calcularCostoConsulta()`: Sobrescritura del método calcularCostoConsulta (polimorfismo).
+- Método `calcularCostoOperacion()`: Permite calcular el costo de todas las operaciones del cirujano.
+
+La **herencia** permite que la clase `Cirujano` herede todas las propiedades y métodos de la clase `Doctor`, extendiendo su funcionalidad.
+
+### Encapsulación
+
+La **encapsulación** se demuestra en la clase `Doctor`:
+
+- El atributo `_añosExperiencia` es privado (por convención, el guion bajo indica privacidad).
+- Se utilizan **getters** y **setters** para acceder y modificar el atributo `_añosExperiencia`:
+
+```javascript
+get añosExperiencia() { ... }
+set añosExperiencia(valor) { ... }
+```
+
+- El **setter** para el atributo `_añosExperiencia` incluye validación para asegurar que los años de experiencia no sean negativos.
+- Esta validación garantiza que los datos relacionados con la experiencia del doctor se mantengan consistentes y correctos.
+
+La encapsulación permite un control más preciso sobre cómo se accede y modifica la información del doctor, asegurando que los datos no se alteren de forma inesperada.
+
+### Polimorfismo
+
+El **polimorfismo** se evidencia en la clase `Cirujano`, que sobrescribe métodos de la clase base `Doctor` para extender su funcionalidad.
+
+### Sobrescritura de métodos:
+
+- `calcularTotalPacientes()`: En la clase `Cirujano`, este método retorna `operacionesRealizadas` en lugar de `pacientesAtendidos`, adaptándose a las necesidades específicas del cirujano.
+
+### Uso de `super`:
+
+- En el método `mostrarInfo()`, se utiliza `super.mostrarInformacion()` para llamar al método de la clase base y luego extenderlo en la clase derivada `Cirujano`. Esto permite reutilizar la funcionalidad de la clase base y agregar comportamientos adicionales.
 
 ### Estructura de los Archivos
 
@@ -135,6 +177,7 @@ La estructura del proyecto en general está organizada de la siguiente manera pa
 - Haz clic derecho sobre `index.html`.
 - Selecciona "Open with Live Server" para iniciar la página en tu navegador.
 
-## Autor
+## Autores
 
 - Martín Avendaño
+- Ana Moraga
