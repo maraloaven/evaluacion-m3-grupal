@@ -315,6 +315,15 @@ document.addEventListener("DOMContentLoaded", () => {
     
     }
     
-    
+    const reservarBtn = document.querySelector(".navbar__link--special");
+    reservarBtn.addEventListener("click", () => {
+        const nombre = prompt("¿Cuál es tu nombre?");
+        if (nombre) {
+            alert(`Gracias por reservar con nosotros, ${nombre}.`);
+            console.log(`Reserva realizada por: ${nombre}`);
+        } else {
+            alert("La reserva fue cancelada.");
+        }
+    });
     
 });
