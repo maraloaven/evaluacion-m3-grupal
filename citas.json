@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "fecha": "20-12-2024",
+    "hora": "10:00",
+    "doctor": "Dr. Mario",
+    "servicio": "Consulta General"
+  },
+  {
+    "id": 2,
+    "fecha": "21-12-2024",
+    "hora": "11:00",
+    "doctor": "Dra. Ana Polo",
+    "servicio": "Emergencias"
+  }
+]

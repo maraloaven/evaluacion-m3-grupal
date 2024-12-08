@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "nombre": "Consulta General",
+    "descripcion": "Ofrecemos un espacio para agendar tus consultas médicas con nuestros profesionales.",
+    "precio": 5000
+  },
+  {
+    "id": 2,
+    "nombre": "Emergencias",
+    "descripcion": "Ofrecemos un espacio para agendar tus consultas médicas con nuestros profesionales.",
+    "precio": 10000
+  },
+  {
+    "id": 3,
+    "nombre": "Especialidades",
+    "descripcion": "Ofrecemos atención médica que abarca desde la medicina general hasta especialidades avanzadas.",
+    "precio": 15000
+  }
+]

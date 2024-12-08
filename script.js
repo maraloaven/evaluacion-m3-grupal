@@ -238,4 +238,83 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .catch((error) => console.error("Error al procesar los datos JSON:", error.message));
     }
+
+    if (window.location.pathname.includes("index.html")) {
+        fetch("./servicios.json")
+            .then((response) => response.json())
+            .then((servicios) => {
+                const container = document.querySelector(".container.py-2");
+                const section = document.createElement("section");
+                section.className = "mt-4";
+    
+                const titulo = document.createElement("h2");
+                titulo.textContent = "Nuestros Servicios Médicos";
+                titulo.className = "text-center mt-4 mb-3";
+                section.appendChild(titulo);
+    
+                const row = document.createElement("div");
+                row.className = "row g-4";
+    
+                servicios.forEach((servicio) => {
+                    const { id, nombre, descripcion, precio } = servicio;
+    
+                    const div = document.createElement("div");
+                    div.className = "col-12 col-md-6 col-lg-4";
+                    div.innerHTML = `
+                        <div class="card h-100 text-center">
+                            <h3>${nombre}</h3>
+                            <p><i>${descripcion}</i></p>
+                            <p>Precio: $${precio}</p>
+                            <img src="./images/ser${id}.jpg" alt="${nombre}">
+                        </div>
+                    `;
+                    row.appendChild(div);
+                });
+    
+                section.appendChild(row);
+                container.appendChild(section);
+            })
+            .catch((error) => console.error("Error al procesar los datos JSON:", error.message));
+    }
+
+    if (window.location.pathname.includes("contacto.html")) {
+        fetch("./citas.json")
+        .then((response) => response.json())
+        .then((citas) => {
+            const container = document.querySelector(".container.py-2");
+            const section = document.createElement("section");
+            section.className = "mt-4";
+            const titulo = document.createElement("h2");
+            titulo.textContent = "Citas Agendadas";
+            titulo.className = "text-center mt-4 mb-3";
+            section.appendChild(titulo);
+    
+            const row = document.createElement("div");
+            row.className = "row g-4";
+    
+            citas.forEach((cita) => {
+                const { id, fecha, hora, doctor, servicio } = cita;
+    
+                const div = document.createElement("div");
+                div.className = "col-12 col-md-6 col-lg-4";
+                div.innerHTML = `
+                    <div class="card h-100 text-center">
+                        <h3>${fecha}</h3>
+                        <p><i>${hora}</i></p>
+                        <p>Doctor: ${doctor}</p>
+                        <p>Servicio: ${servicio}</p>
+                    </div>
+                `;
+                row.appendChild(div);
+            });
+    
+            section.appendChild(row);
+            container.appendChild(section);
+        })
+        .catch((error) => console.error("Error al procesar los datos JSON:", error.message));
+    
+    }
+    
+    
+    
 });
